@@ -1,0 +1,14 @@
+{
+  "name": "sink",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "./index.js"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "ws": "^1.1.1"
+  }
+}
