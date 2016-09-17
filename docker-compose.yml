@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  players:
+    build:
+      context: canned-events
+      args:
+        FILE: player-events.yaml
+
+  matches:
+    build:
+      context: canned-events
+      args:
+        FILE: match-events.yaml
