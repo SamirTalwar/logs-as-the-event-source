@@ -6,9 +6,26 @@ services:
       context: canned-events
       args:
         FILE: player-events.yaml
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+    depends_on:
+      - fluentd
 
   matches:
     build:
       context: canned-events
       args:
         FILE: match-events.yaml
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+    depends_on:
+      - fluentd
+
+  fluentd:
+    build: fluentd
+    ports:
+      - '24224:24224'
