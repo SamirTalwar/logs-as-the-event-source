@@ -1,0 +1,31 @@
+events:
+  - type: PlayerJoin
+    timestamp: 1
+    player:
+      id: 1
+      name: A
+  - type: PlayerJoin
+    timestamp: 3
+    player:
+      id: 2
+      name: B
+  - type: PlayerJoin
+    timestamp: 4
+    player:
+      id: 3
+      name: C
+  - type: PlayerJoin
+    timestamp: 5
+    player:
+      id: 4
+      name: D
+  - type: PlayerJoin
+    timestamp: 5
+    player:
+      id: 5
+      name: E
+  - type: PlayerJoin
+    timestamp: 8
+    player:
+      id: 6
+      name: F
