@@ -10,4 +10,5 @@ events.each do |event|
   time = event['timestamp']
   event.delete('timestamp')
   puts event.to_json
+  $stdout.flush
 end
