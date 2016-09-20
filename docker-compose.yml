@@ -21,7 +21,11 @@ services:
       options:
         fluentd-address: localhost:24224
 
-  fluentd-sink:
-    build: sink
+  scoring:
+    build: scoring
     environment:
       WEBSOCKET: ws://172.17.0.1:9999
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224

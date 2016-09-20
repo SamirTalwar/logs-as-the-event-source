@@ -56,15 +56,15 @@ events:
     player: 4
     perpetrator: 2
   - type: MatchRoundEnd
-    timestamp: 51
+    timestamp: 52
     match:
       id: 99
     round: 1
   - type: MatchRoundStart
-    timestamp: 61
+    timestamp: 62
     match:
       id: 99
-    round: 1
+    round: 2
   - type: MatchPlayerDown
     timestamp: 70
     match:
@@ -102,7 +102,7 @@ events:
     player: 6
     perpetrator: 3
   - type: MatchPlayerDown
-    timestamp: 100
+    timestamp: 99
     match:
       id: 99
     player: 4
@@ -111,7 +111,7 @@ events:
     timestamp: 100
     match:
       id: 99
-    round: 1
+    round: 2
   - type: MatchEnd
     timestamp: 100
     match:

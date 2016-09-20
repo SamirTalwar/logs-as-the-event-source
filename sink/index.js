@@ -3,10 +3,9 @@
 const WebSocket = require('ws')
 const ws = new WebSocket(process.env.WEBSOCKET)
 ws.on('message', data => {
-  process.stdout.write(data)
-  process.stdout.write('\n')
+  console.log(data)
 })
 ws.on('error', error => {
-  process.stderr.write(error)
-  process.stderr.write('\n')
+  console.log(JSON.stringify(Object.assign(error, {type: 'Error'})))
+  process.exitCode = 1
 })
