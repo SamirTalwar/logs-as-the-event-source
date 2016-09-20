@@ -1,0 +1,12 @@
+{
+  "name": "canned-events",
+  "version": "1.0.0",
+  "license": "CC0-1.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "./index.js"
+  },
+  "dependencies": {
+    "js-yaml": "^3.6.1"
+  }
+}

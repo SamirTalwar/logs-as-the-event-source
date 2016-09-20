@@ -1,9 +1,7 @@
-FROM ruby:slim
+FROM node:onbuild
 
 ARG FILE
-
-WORKDIR /app
-COPY app.rb app.rb
 COPY $FILE events.yaml
 
-CMD ["./app.rb", "events.yaml"]
+ENTRYPOINT ["npm", "--silent"]
+CMD ["start", "events.yaml"]
