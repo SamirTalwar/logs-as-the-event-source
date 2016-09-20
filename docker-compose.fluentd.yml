@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  fluentd:
+    build: fluentd
+    ports:
+      - '9999:8080'
+      - '24224:24224'
