@@ -35,12 +35,12 @@ const handlers = {
     match.round = event.match.round
     match.playersUp = new Set(playersIn(match))
   },
-  'MatchPlayerDown': event => {
+  'GamePlayerDown': event => {
     const match = matches.get(event.match.id)
     match.playersUp.delete(event.player)
     checkRoundWinner(match)
   },
-  'MatchPlayerRevived': event => {
+  'GamePlayerRevived': event => {
     const match = matches.get(event.match.id)
     match.playersUp.add(event.player)
   },

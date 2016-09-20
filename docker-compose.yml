@@ -11,11 +11,21 @@ services:
       options:
         fluentd-address: localhost:24224
 
-  matches:
+  matchmaker:
     build:
       context: canned-events
       args:
-        FILE: match-events.yaml
+        FILE: matchmaker-events.yaml
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+
+  gameplay:
+    build:
+      context: canned-events
+      args:
+        FILE: gameplay-events.yaml
     logging:
       driver: fluentd
       options:

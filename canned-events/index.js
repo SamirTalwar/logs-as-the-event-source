@@ -29,9 +29,9 @@ const emit = (events, time) => {
 
     const rest = events.slice(1)
     emit(rest, currentTime)
-  }, (event.timestamp - time) * 1000)
+  }, (event.timestamp - time) * 100)
 }
 
 main()
 
-setTimeout(() => {}, 1000 * 60 * 60 * 24)
+setTimeout(() => {}, 100 * 60 * 60 * 24)

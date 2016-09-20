@@ -1,0 +1,85 @@
+events:
+  - type: GamePlayerDown
+    timestamp: 25
+    match:
+      id: 99
+    player: 3
+    perpetrator: 5
+  - type: GamePlayerDown
+    timestamp: 28
+    match:
+      id: 99
+    player: 5
+    perpetrator: 2
+  - type: GamePlayerRevived
+    timestamp: 35
+    match:
+      id: 99
+    player: 3
+    perpetrator: 6
+  - type: GamePlayerDown
+    timestamp: 40
+    match:
+      id: 99
+    player: 1
+    perpetrator: 6
+  - type: GamePlayerDown
+    timestamp: 45
+    match:
+      id: 99
+    player: 6
+    perpetrator: 4
+  - type: GamePlayerRevived
+    timestamp: 50
+    match:
+      id: 99
+    player: 6
+    perpetrator: 3
+  - type: GamePlayerDown
+    timestamp: 51
+    match:
+      id: 99
+    player: 4
+    perpetrator: 2
+  - type: GamePlayerDown
+    timestamp: 70
+    match:
+      id: 99
+    player: 3
+    perpetrator: 5
+  - type: GamePlayerDown
+    timestamp: 80
+    match:
+      id: 99
+    player: 5
+    perpetrator: 2
+  - type: GamePlayerRevived
+    timestamp: 82
+    match:
+      id: 99
+    player: 3
+    perpetrator: 6
+  - type: GamePlayerDown
+    timestamp: 85
+    match:
+      id: 99
+    player: 1
+    perpetrator: 6
+  - type: GamePlayerDown
+    timestamp: 90
+    match:
+      id: 99
+    player: 6
+    perpetrator: 4
+  - type: GamePlayerRevived
+    timestamp: 95
+    match:
+      id: 99
+    player: 6
+    perpetrator: 3
+  - type: GamePlayerDown
+    timestamp: 97
+    match:
+      id: 99
+    player: 4
+    perpetrator: 2

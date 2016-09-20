@@ -14,12 +14,12 @@ events:
       id: 99
     round: 1
   - type: MatchRoundEnd
-    timestamp: 52
+    timestamp: 54
     match:
       id: 99
     round: 1
   - type: MatchRoundStart
-    timestamp: 62
+    timestamp: 64
     match:
       id: 99
     round: 2
