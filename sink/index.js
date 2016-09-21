@@ -6,6 +6,6 @@ ws.on('message', data => {
   console.log(data)
 })
 ws.on('error', error => {
-  console.log(JSON.stringify(Object.assign(error, {type: 'Error'})))
+  console.log(JSON.stringify({type: 'Error', message: error.message, stack: error.stack.split(/\n/)}))
   process.exitCode = 1
 })
