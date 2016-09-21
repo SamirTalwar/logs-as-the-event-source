@@ -11,6 +11,12 @@ main = () => {
       return
     }
 
+    console.log(JSON.stringify({
+      type: 'Startup',
+      service: process.env.SERVICE,
+      hostname: process.env.HOSTNAME
+    }))
+
     const events = yaml.safeLoad(contents).events
     emit(events, 0)
   })

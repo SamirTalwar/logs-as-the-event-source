@@ -6,6 +6,8 @@ services:
       context: canned-events
       args:
         FILE: player-events.yaml
+    environment:
+      SERVICE: players
     logging:
       driver: fluentd
       options:
@@ -16,6 +18,8 @@ services:
       context: canned-events
       args:
         FILE: matchmaker-events.yaml
+    environment:
+      SERVICE: matchmaker
     logging:
       driver: fluentd
       options:
@@ -26,6 +30,8 @@ services:
       context: canned-events
       args:
         FILE: gameplay-events.yaml
+    environment:
+      SERVICE: gameplay
     logging:
       driver: fluentd
       options:

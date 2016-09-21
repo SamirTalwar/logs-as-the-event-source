@@ -9,6 +9,13 @@ let matches = new Map()
 
 const main = () => {
   const ws = new WebSocket(process.env.WEBSOCKET)
+
+  console.log(JSON.stringify({
+    type: 'Startup',
+    service: 'scoring',
+    hostname: process.env.HOSTNAME
+  }))
+
   ws.on('error', report)
 
   ws.on('message', attempt(data => {
