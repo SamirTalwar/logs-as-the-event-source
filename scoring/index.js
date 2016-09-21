@@ -13,7 +13,7 @@ const main = () => {
   const ws = new WebSocket(process.env.WEBSOCKET)
 
   console.log(JSON.stringify({
-    type: 'Startup',
+    type: 'ServiceStarted',
     service: 'scoring',
     hostname: process.env.HOSTNAME
   }))
@@ -32,7 +32,7 @@ const main = () => {
 }
 
 const handlers = {
-  'MatchStart': event => {
+  'MatchStarted': event => {
     const match = event.match
     match.state = Ended
     Teams.forEach(team => {
@@ -40,7 +40,7 @@ const handlers = {
     })
     matches.set(match.id, match)
   },
-  'MatchRoundStart': event => {
+  'MatchRoundStarted': event => {
     const match = matches.get(event.match.id)
     match.state = Started
     match.round = event.match.round
@@ -55,7 +55,7 @@ const handlers = {
     const match = matches.get(event.match.id)
     match.playersUp.add(event.player)
   },
-  'ScoringRoundWinner': event => {
+  'ScoringRoundWon': event => {
     const match = matches.get(event.match.id)
     match.teams[event.winner].score += 1
     checkMatchWinner(match)
@@ -71,7 +71,7 @@ const checkRoundWinner = match => {
     if (match.state === Started && !match.teams[team].players.some(player => match.playersUp.has(player.id))) {
       match.state = Ended
       console.log(JSON.stringify({
-        type: 'ScoringRoundWinner',
+        type: 'ScoringRoundWon',
         match: {
           id: match.id
         },
@@ -86,7 +86,7 @@ const checkMatchWinner = match => {
   Teams.forEach(team => {
     if (match.teams[team].score >= WinningScore) {
       console.log(JSON.stringify({
-        type: 'ScoringMatchWinner',
+        type: 'ScoringMatchWon',
         match: {
           id: match.id
         },

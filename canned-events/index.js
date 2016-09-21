@@ -12,7 +12,7 @@ main = () => {
     }
 
     console.log(JSON.stringify({
-      type: 'Startup',
+      type: 'ServiceStarted',
       service: process.env.SERVICE,
       hostname: process.env.HOSTNAME
     }))

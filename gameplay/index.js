@@ -11,7 +11,7 @@ const main = () => {
   const ws = new WebSocket(process.env.WEBSOCKET)
 
   console.log(JSON.stringify({
-    type: 'Startup',
+    type: 'ServiceStarted',
     service: 'gameplay',
     hostname: process.env.HOSTNAME
   }))
@@ -30,7 +30,7 @@ const main = () => {
 }
 
 const handlers = {
-  'MatchRoundStart': event => {
+  'MatchRoundStarted': event => {
     matches.set(event.match.id, {
       state: Started,
       id: event.match.id,
@@ -39,7 +39,7 @@ const handlers = {
     })
     makeAMove(event.match.id)
   },
-  'MatchRoundEnd': event => {
+  'MatchRoundEnded': event => {
     matches.set(event.match.id, {state: Ended})
   }
 }

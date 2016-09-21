@@ -14,7 +14,7 @@ const main = () => {
   const ws = new WebSocket(process.env.WEBSOCKET)
 
   console.log(JSON.stringify({
-    type: 'Startup',
+    type: 'ServiceStarted',
     service: 'matchmaker',
     hostname: process.env.HOSTNAME
   }))
@@ -37,26 +37,26 @@ const handlers = {
     players.push(event.player)
     startMatchIfPossible()
   },
-  'MatchStart': event => {
+  'MatchStarted': event => {
     const match = matches.get(event.match.id)
     match.round = 1
     console.log(JSON.stringify({
-      type: 'MatchRoundStart',
+      type: 'MatchRoundStarted',
       match: match
     }))
   },
-  'ScoringRoundWinner': event => {
+  'ScoringRoundWon': event => {
     const match = matches.get(event.match.id)
     console.log(JSON.stringify({
-      type: 'MatchRoundEnd',
+      type: 'MatchRoundEnded',
       match: match
     }))
   },
-  'ScoringMatchWinner': event => {
+  'ScoringMatchWon': event => {
     const match = matches.get(event.match.id)
     match.winner = event.winner
   },
-  'MatchRoundEnd': event => {
+  'MatchRoundEnded': event => {
     const match = matches.get(event.match.id)
     if (match.winner) {
       console.log(JSON.stringify({
@@ -66,7 +66,7 @@ const handlers = {
     } else {
       match.round += 1
       console.log(JSON.stringify({
-        type: 'MatchRoundStart',
+        type: 'MatchRoundStarted',
         match: match
       }))
     }
@@ -97,7 +97,7 @@ const startMatchIfPossible = () => {
   }
   matches.set(match.id, match)
   console.log(JSON.stringify({
-    type: 'MatchStart',
+    type: 'MatchStarted',
     match: match
   }))
 }
