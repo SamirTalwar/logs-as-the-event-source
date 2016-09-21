@@ -38,6 +38,6 @@ const emit = (events, time) => {
   }, (event.timestamp - time) * 100)
 }
 
-main()
+setTimeout(main, 1000)
 
 setTimeout(() => {}, 100 * 60 * 60 * 24)

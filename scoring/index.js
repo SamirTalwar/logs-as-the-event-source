@@ -4,6 +4,8 @@ const WebSocket = require('ws')
 
 const Teams = ['alpha', 'bravo']
 const WinningScore = 2
+const Started = {}
+const Ended = {}
 
 let matches = new Map()
 
@@ -32,6 +34,7 @@ const main = () => {
 const handlers = {
   'MatchStart': event => {
     const match = event.match
+    match.state = Ended
     Teams.forEach(team => {
       match.teams[team].score = 0
     })
@@ -39,6 +42,7 @@ const handlers = {
   },
   'MatchRoundStart': event => {
     const match = matches.get(event.match.id)
+    match.state = Started
     match.round = event.match.round
     match.playersUp = new Set(playersIn(match))
   },
@@ -47,7 +51,7 @@ const handlers = {
     match.playersUp.delete(event.player)
     checkRoundWinner(match)
   },
-  'GamePlayerRevived': event => {
+  'GamePlayerUp': event => {
     const match = matches.get(event.match.id)
     match.playersUp.add(event.player)
   },
@@ -60,11 +64,12 @@ const handlers = {
 
 const noHandler = () => {}
 
-const playersIn = match => Array.prototype.concat.apply([], Teams.map(team => match.teams[team].players))
+const playersIn = match => Array.prototype.concat.apply([], Object.keys(match.teams).map(team => match.teams[team].players)).map(player => player.id)
 
 const checkRoundWinner = match => {
   Teams.forEach(team => {
-    if (!match.teams[team].players.some(player => match.playersUp.has(player))) {
+    if (match.state === Started && !match.teams[team].players.some(player => match.playersUp.has(player.id))) {
+      match.state = Ended
       console.log(JSON.stringify({
         type: 'ScoringRoundWinner',
         match: {

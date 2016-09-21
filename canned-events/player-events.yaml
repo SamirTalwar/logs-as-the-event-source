@@ -1,30 +1,30 @@
 events:
-  - type: PlayerJoin
+  - type: PlayerJoined
     timestamp: 1
     player:
       id: 1
       name: A
-  - type: PlayerJoin
+  - type: PlayerJoined
     timestamp: 3
     player:
       id: 2
       name: B
-  - type: PlayerJoin
+  - type: PlayerJoined
     timestamp: 4
     player:
       id: 3
       name: C
-  - type: PlayerJoin
+  - type: PlayerJoined
     timestamp: 5
     player:
       id: 4
       name: D
-  - type: PlayerJoin
+  - type: PlayerJoined
     timestamp: 5
     player:
       id: 5
       name: E
-  - type: PlayerJoin
+  - type: PlayerJoined
     timestamp: 8
     player:
       id: 6

@@ -14,24 +14,18 @@ services:
         fluentd-address: localhost:24224
 
   matchmaker:
-    build:
-      context: canned-events
-      args:
-        FILE: matchmaker-events.yaml
+    build: matchmaker
     environment:
-      SERVICE: matchmaker
+      WEBSOCKET: ws://172.17.0.1:9999
     logging:
       driver: fluentd
       options:
         fluentd-address: localhost:24224
 
   gameplay:
-    build:
-      context: canned-events
-      args:
-        FILE: gameplay-events.yaml
+    build: gameplay
     environment:
-      SERVICE: gameplay
+      WEBSOCKET: ws://172.17.0.1:9999
     logging:
       driver: fluentd
       options:
