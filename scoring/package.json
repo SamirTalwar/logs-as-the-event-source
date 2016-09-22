@@ -4,9 +4,13 @@
   "license": "CC0-1.0",
   "main": "index.js",
   "scripts": {
-    "start": "./index.js"
+    "start": "./index.js",
+    "test": "standard"
   },
   "dependencies": {
     "ws": "^1.1.1"
+  },
+  "devDependencies": {
+    "standard": "^8.1.0"
   }
 }

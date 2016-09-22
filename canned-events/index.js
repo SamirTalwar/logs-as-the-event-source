@@ -5,7 +5,7 @@ const yaml = require('js-yaml')
 
 const speed = process.env.SPEED || 1
 
-main = () => {
+const main = () => {
   fs.readFile(process.argv[2], (error, contents) => {
     if (error) {
       console.error(error)

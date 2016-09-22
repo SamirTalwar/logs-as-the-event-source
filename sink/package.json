@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "./index.js"
+    "start": "./index.js",
+    "test": "standard"
   },
   "author": "",
   "license": "UNLICENSED",
   "dependencies": {
     "ws": "^1.1.1"
+  },
+  "devDependencies": {
+    "standard": "^8.1.0"
   }
 }
