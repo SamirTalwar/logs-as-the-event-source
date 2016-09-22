@@ -18,6 +18,7 @@ services:
     build: matchmaker
     environment:
       - WEBSOCKET=ws://172.17.0.1:9999
+      - SPEED
     logging:
       driver: fluentd
       options:

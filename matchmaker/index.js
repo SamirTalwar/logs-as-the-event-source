@@ -9,6 +9,7 @@ const PlayersPerMatch = Teams.length * PlayersPerTeam
 let players = []
 let matches = new Map()
 let lastMatchId = 0
+const speed = process.env.SPEED || 1
 
 const main = () => {
   const ws = new WebSocket(process.env.WEBSOCKET)
@@ -35,7 +36,7 @@ const main = () => {
 const handlers = {
   'PlayerJoined': event => {
     players.push(event.player)
-    startMatchIfPossible()
+    setTimeout(startMatchIfPossible, 3000 / speed)
   },
   'MatchStarted': event => {
     const match = matches.get(event.match.id)
@@ -57,19 +58,21 @@ const handlers = {
     match.winner = event.winner
   },
   'MatchRoundEnded': event => {
-    const match = matches.get(event.match.id)
-    if (match.winner) {
-      console.log(JSON.stringify({
-        type: 'MatchEnd',
-        match: match
-      }))
-    } else {
-      match.round += 1
-      console.log(JSON.stringify({
-        type: 'MatchRoundStarted',
-        match: match
-      }))
-    }
+    setTimeout(() => {
+      const match = matches.get(event.match.id)
+      if (match.winner) {
+        console.log(JSON.stringify({
+          type: 'MatchEnd',
+          match: match
+        }))
+      } else {
+        match.round += 1
+        console.log(JSON.stringify({
+          type: 'MatchRoundStarted',
+          match: match
+        }))
+      }
+    }, 3000 / speed)
   }
 }
 
