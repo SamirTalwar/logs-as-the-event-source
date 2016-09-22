@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const Logger = require('microservice-logging')
 const WebSocket = require('ws')
 
 const Teams = ['alpha', 'bravo']
@@ -7,26 +8,31 @@ const WinningScore = 2
 const Started = {}
 const Ended = {}
 
+const log = new Logger({now: Date.now, output: console, events: {
+  serviceStarted: 'ServiceStarted',
+  scoringRoundWon: 'ScoringRoundWon',
+  scoringMatchWon: 'ScoringMatchWon',
+  unhandled: 'Error'
+}}).with({service: 'scoring'})
+
 let matches = new Map()
 
 const main = () => {
   const ws = new WebSocket(process.env.WEBSOCKET)
 
-  console.log(JSON.stringify({
-    type: 'ServiceStarted',
-    service: 'scoring',
+  log.serviceStarted.info({
     hostname: process.env.HOSTNAME
-  }))
+  })
 
   ws.on('error', report)
 
   ws.on('message', attempt(data => {
     const event = JSON.parse(data)[1].event
-    if (!event || !event.type) {
+    if (!event || !event.event_type) {
       report(new Error('Event with no type.'))
       return
     }
-    const handle = handlers[event.type] || noHandler
+    const handle = handlers[event.event_type] || noHandler
     handle(event)
   }))
 }
@@ -70,14 +76,13 @@ const checkRoundWinner = match => {
   Teams.forEach(team => {
     if (match.state === Started && !match.teams[team].players.some(player => match.playersUp.has(player.id))) {
       match.state = Ended
-      console.log(JSON.stringify({
-        type: 'ScoringRoundWon',
+      log.scoringRoundWon.info({
         match: {
           id: match.id
         },
         round: match.round,
         winner: other(team)
-      }))
+      })
     }
   })
 }
@@ -85,13 +90,12 @@ const checkRoundWinner = match => {
 const checkMatchWinner = match => {
   Teams.forEach(team => {
     if (match.teams[team].score >= WinningScore) {
-      console.log(JSON.stringify({
-        type: 'ScoringMatchWon',
+      log.scoringMatchWon.info({
         match: {
           id: match.id
         },
         winner: team
-      }))
+      })
     }
   })
 }
@@ -114,7 +118,7 @@ const attempt = behaviour => (...args) => {
 }
 
 const report = error => {
-  console.log(JSON.stringify({type: 'Error', message: error.message, stack: error.stack.split(/\n/)}))
+  log.unhandled.error({message: error.message, stack: error.stack.split(/\n/)})
   process.exitCode = 1
 }
 

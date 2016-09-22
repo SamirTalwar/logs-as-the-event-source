@@ -1,31 +1,37 @@
 #!/usr/bin/env node
 
+const Logger = require('microservice-logging')
 const WebSocket = require('ws')
 
 const Started = {}
 const Ended = {}
 
-let matches = new Map()
 const speed = process.env.SPEED || 1
+const log = new Logger({now: Date.now, output: console, events: {
+  serviceStarted: 'ServiceStarted',
+  gamePlayerDown: 'GamePlayerDown',
+  gamePlayerUp: 'GamePlayerUp',
+  unhandled: 'Error'
+}}).with({service: 'gameplay'})
+
+let matches = new Map()
 
 const main = () => {
   const ws = new WebSocket(process.env.WEBSOCKET)
 
-  console.log(JSON.stringify({
-    type: 'ServiceStarted',
-    service: 'gameplay',
+  log.serviceStarted.info({
     hostname: process.env.HOSTNAME
-  }))
+  })
 
   ws.on('error', report)
 
   ws.on('message', attempt(data => {
     const event = JSON.parse(data)[1].event
-    if (!event || !event.type) {
+    if (!event || !event.event_type) {
       report(new Error('Event with no type.'))
       return
     }
-    const handle = handlers[event.type] || noHandler
+    const handle = handlers[event.event_type] || noHandler
     handle(event)
   }))
 }
@@ -70,13 +76,12 @@ const bringSomeoneUp = match => {
     return
   }
 
-  console.log(JSON.stringify({
-    type: 'GamePlayerUp',
+  log.gamePlayerUp.info({
     match: {
       id: match.id
     },
     player: playerId
-  }))
+  })
 }
 
 const takeSomeoneDown = match => {
@@ -85,13 +90,12 @@ const takeSomeoneDown = match => {
     return
   }
 
-  console.log(JSON.stringify({
-    type: 'GamePlayerDown',
+  log.gamePlayerDown.info({
     match: {
       id: match.id
     },
     player: playerId
-  }))
+  })
 }
 
 const move = (from, to) => {
@@ -116,7 +120,7 @@ const attempt = behaviour => (...args) => {
 }
 
 const report = error => {
-  console.log(JSON.stringify({type: 'Error', message: error.message, stack: error.stack.split(/\n/)}))
+  log.unhandled.error({message: error.message, stack: error.stack.split(/\n/)})
   process.exitCode = 1
 }
 

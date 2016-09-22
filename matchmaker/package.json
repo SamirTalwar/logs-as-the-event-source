@@ -8,6 +8,7 @@
     "test": "standard"
   },
   "dependencies": {
+    "microservice-logging": "^1.0.0",
     "ws": "^1.1.1"
   },
   "devDependencies": {

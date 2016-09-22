@@ -2,6 +2,7 @@
 
 const fs = require('fs')
 const yaml = require('js-yaml')
+const Logger = require('microservice-logging')
 
 const speed = process.env.SPEED || 1
 
@@ -12,31 +13,38 @@ const main = () => {
       process.exitCode = 1
       return
     }
-
-    console.log(JSON.stringify({
-      type: 'ServiceStarted',
-      service: process.env.SERVICE,
-      hostname: process.env.HOSTNAME
-    }))
-
     const events = yaml.safeLoad(contents).events
-    emit(events, 0)
+    const eventTypes = {serviceStarted: 'ServiceStarted'}
+    new Set(events.map(event => event.type)).forEach(type => {
+      eventTypes[type] = type
+    })
+
+    const log = new Logger({now: Date.now, output: console, events: eventTypes})
+      .with({service: process.env.SERVICE})
+
+    log.serviceStarted.info({
+      hostname: process.env.HOSTNAME
+    })
+
+    emit(log, events, 0)
   })
 }
 
-const emit = (events, time) => {
+const emit = (log, events, time) => {
   const event = events[0]
   if (!event) {
     return
   }
 
   setTimeout(() => {
-    let currentTime = event.timestamp
+    const eventType = event.type
+    const currentTime = event.timestamp
+    delete event.type
     delete event.timestamp
-    console.log(JSON.stringify(event))
+    log[eventType].info(event)
 
     const rest = events.slice(1)
-    emit(rest, currentTime)
+    emit(log, rest, currentTime)
   }, (event.timestamp - time) * 1000 / speed)
 }
 
