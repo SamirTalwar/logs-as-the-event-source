@@ -7,7 +7,8 @@ services:
       args:
         FILE: player-events.yaml
     environment:
-      SERVICE: players
+      - SERVICE=players
+      - SPEED
     logging:
       driver: fluentd
       options:
@@ -16,7 +17,7 @@ services:
   matchmaker:
     build: matchmaker
     environment:
-      WEBSOCKET: ws://172.17.0.1:9999
+      - WEBSOCKET=ws://172.17.0.1:9999
     logging:
       driver: fluentd
       options:
@@ -25,7 +26,8 @@ services:
   gameplay:
     build: gameplay
     environment:
-      WEBSOCKET: ws://172.17.0.1:9999
+      - WEBSOCKET=ws://172.17.0.1:9999
+      - SPEED
     logging:
       driver: fluentd
       options:
@@ -34,7 +36,7 @@ services:
   scoring:
     build: scoring
     environment:
-      WEBSOCKET: ws://172.17.0.1:9999
+      - WEBSOCKET=ws://172.17.0.1:9999
     logging:
       driver: fluentd
       options:

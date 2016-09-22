@@ -3,6 +3,8 @@
 const fs = require('fs')
 const yaml = require('js-yaml')
 
+const speed = process.env.SPEED || 1
+
 main = () => {
   fs.readFile(process.argv[2], (error, contents) => {
     if (error) {
@@ -35,7 +37,7 @@ const emit = (events, time) => {
 
     const rest = events.slice(1)
     emit(rest, currentTime)
-  }, (event.timestamp - time) * 100)
+  }, (event.timestamp - time) * 1000 / speed)
 }
 
 setTimeout(main, 1000)

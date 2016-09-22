@@ -6,6 +6,7 @@ const Started = {}
 const Ended = {}
 
 let matches = new Map()
+const speed = process.env.SPEED || 1
 
 const main = () => {
   const ws = new WebSocket(process.env.WEBSOCKET)
@@ -54,13 +55,13 @@ const makeAMove = matchId => {
     }
 
     const nextMove = Math.random()
-    if (nextMove < 0.02) {
+    if (nextMove < 0.1) {
       bringSomeoneUp(match)
-    } else if (nextMove < 0.1) {
+    } else if (nextMove < 0.3) {
       takeSomeoneDown(match)
     }
     makeAMove(matchId)
-  }), 100)
+  }), 1000 / speed)
 }
 
 const bringSomeoneUp = match => {
