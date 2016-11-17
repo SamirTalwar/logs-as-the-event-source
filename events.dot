@@ -1,0 +1,8 @@
+digraph {
+  MatchStarted -> MatchRoundStarted
+  MatchRoundStarted -> {GamePlayerDown GamePlayerUp}
+  GamePlayerDown -> ScoringRoundWon
+  ScoringRoundWon -> {MatchRoundEnded ScoringMatchWon}
+  MatchRoundEnded -> MatchRoundStarted
+  ScoringMatchWon -> MatchEnded
+}
